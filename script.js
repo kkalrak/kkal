@@ -7,6 +7,7 @@ let currentDocuments = [];
 document.addEventListener('DOMContentLoaded', () => {
     loadCompanies();
     setupSearch();
+    // 초기에는 목록을 안 보임 (검색 결과만 표시)
 });
 
 // companies.json 로드
@@ -22,21 +23,10 @@ async function loadCompanies() {
     }
 }
 
-// 회사 목록 렌더링
+// 회사 목록 렌더링 (초기에는 아무것도 표시하지 않음)
 function renderCompanies() {
     const companiesList = document.getElementById('companiesList');
-    companiesList.innerHTML = '';
-
-    companiesData.forEach(company => {
-        const companyDiv = document.createElement('div');
-        companyDiv.className = 'company-item';
-        companyDiv.innerHTML = `
-            <div class="company-name">${company.name}</div>
-            <div class="company-ticker">${company.ticker}</div>
-        `;
-        companyDiv.addEventListener('click', () => selectCompany(company));
-        companiesList.appendChild(companyDiv);
-    });
+    companiesList.innerHTML = ''; // 초기에는 빈 상태
 }
 
 // 회사 선택
@@ -126,8 +116,9 @@ function performSearch() {
     const query = document.getElementById('searchInput').value.toLowerCase().trim();
 
     if (!query) {
-        // 검색어 없으면 원래 목록으로 돌아가기
-        renderCompanies();
+        // 검색어 없으면 빈 상태
+        const companiesList = document.getElementById('companiesList');
+        companiesList.innerHTML = '';
         return;
     }
 
