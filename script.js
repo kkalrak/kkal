@@ -27,16 +27,22 @@ async function loadDocument(filePath) {
         const response = await fetch(filePath);
         const markdown = await response.text();
         
-        // Marked 동적 로드 및 렌더링
-        const { marked } = await import('https://cdn.jsdelivr.net/npm/marked@11.1.1/+esm');
-        const html = marked(markdown);
+        // marked 사용 (window.marked)
+        let html;
+        if (typeof window.marked === 'function') {
+            html = window.marked(markdown);
+        } else if (window.marked && typeof window.marked.parse === 'function') {
+            html = window.marked.parse(markdown);
+        } else {
+            throw new Error('marked 라이브러리를 로드할 수 없습니다');
+        }
         
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `<div class="report-content">${html}</div>`;
     } catch (error) {
         console.error('문서 로드 실패:', error);
         const reportContainer = document.getElementById('reportContainer');
-        reportContainer.innerHTML = `<p style="color: red;">문서를 불러올 수 없습니다.</p>`;
+        reportContainer.innerHTML = `<p style="color: red;">문서를 불러올 수 없습니다: ${error.message}</p>`;
     }
 }
 
