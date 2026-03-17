@@ -21,17 +21,22 @@ async function loadCompanies() {
 
 
 
-// 문서 로드 및 렌더링 (나중에 구현)
+// 문서 로드 및 렌더링
 async function loadDocument(filePath) {
     try {
         const response = await fetch(filePath);
         const markdown = await response.text();
+        
+        // Marked 동적 로드 및 렌더링
+        const { marked } = await import('https://cdn.jsdelivr.net/npm/marked@11.1.1/+esm');
         const html = marked(markdown);
         
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `<div class="report-content">${html}</div>`;
     } catch (error) {
         console.error('문서 로드 실패:', error);
+        const reportContainer = document.getElementById('reportContainer');
+        reportContainer.innerHTML = `<p style="color: red;">문서를 불러올 수 없습니다.</p>`;
     }
 }
 
