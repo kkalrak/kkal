@@ -5,7 +5,8 @@ let companiesData = [];
 document.addEventListener('DOMContentLoaded', () => {
     loadCompanies();
     setupSearch();
-    // 초기에는 목록을 안 보임 (검색 결과만 표시)
+    // 초기에 모든 문서를 나열
+    renderAllDocuments();
 });
 
 // companies.json 로드
@@ -65,14 +66,53 @@ function setupSearch() {
     searchInput.addEventListener('input', performSearch);
 }
 
+// 모든 문서를 나열
+function renderAllDocuments() {
+    const companiesList = document.getElementById('companiesList');
+    companiesList.innerHTML = '';
+
+    companiesData.forEach(company => {
+        company.documents.forEach(doc => {
+            const docDiv = document.createElement('div');
+            docDiv.style.padding = '0.75rem 1rem';
+            docDiv.style.backgroundColor = '#f9f9f9';
+            docDiv.style.borderRadius = '6px';
+            docDiv.style.marginBottom = '0.5rem';
+            docDiv.style.cursor = 'pointer';
+            docDiv.style.borderLeft = '4px solid #ddd';
+            docDiv.style.transition = 'all 0.3s ease';
+            
+            // 마우스 오버 효과
+            docDiv.addEventListener('mouseenter', () => {
+                docDiv.style.backgroundColor = '#f0f0f0';
+                docDiv.style.borderLeftColor = '#667eea';
+            });
+            docDiv.addEventListener('mouseleave', () => {
+                docDiv.style.backgroundColor = '#f9f9f9';
+                docDiv.style.borderLeftColor = '#ddd';
+            });
+            
+            docDiv.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 0.2rem;">${doc.title}</div>
+                <div style="font-size: 0.85rem; color: #999;">${company.name} • ${doc.date}</div>
+            `;
+            
+            docDiv.addEventListener('click', (e) => {
+                selectDocument(company, doc);
+            });
+            
+            companiesList.appendChild(docDiv);
+        });
+    });
+}
+
 // 검색 수행
 function performSearch() {
     const query = document.getElementById('searchInput').value.toLowerCase().trim();
 
     if (!query) {
-        // 검색어 없으면 빈 상태
-        const companiesList = document.getElementById('companiesList');
-        companiesList.innerHTML = '';
+        // 검색어 없으면 모든 문서 표시
+        renderAllDocuments();
         return;
     }
 
