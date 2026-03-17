@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: 
+
+Sitemap: https://kkal-stock-reports.pages.dev/sitemap.xml

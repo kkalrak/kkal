@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="깔깔 주식 보고서 - 투자자를 위한 상장 기업 종합 분석 보고서 플랫폼. 삼성전자, 네이버, 카카오 등 주요 기업의 재무분석, 투자의견, 목표가 정보를 제공합니다.">
+    <meta name="keywords" content="주식, 보고서, 투자, 분석, 삼성전자, 네이버, 카카오, 상장기업, 주식분석, 재무분석">
+    <meta name="author" content="깔깔 주식 보고서">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="korean">
+    
+    <!-- Open Graph (SNS 공유) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="깔깔 주식 보고서 - 투자자를 위한 종합 분석 플랫폼">
+    <meta property="og:description" content="상장 기업의 재무분석, 투자의견, 목표가를 한눈에 보는 주식 보고서 플랫폼">
+    <meta property="og:locale" content="ko_KR">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="깔깔 주식 보고서">
+    <meta name="twitter:description" content="투자자를 위한 종합 주식 분석 보고서">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://kkal-stock-reports.pages.dev/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23667eea'>📊</text></svg>">
+    
+    <title>깔깔 주식 보고서 - 투자자를 위한 종합 분석 보고서 플랫폼</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- JSON-LD 구조화 데이터 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "깔깔 주식 보고서",
+      "description": "투자자를 위한 상장 기업 종합 분석 보고서 플랫폼",
+      "url": "https://kkal-stock-reports.pages.dev/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://kkal-stock-reports.pages.dev/?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>깔깔 주식 보고서 📊</h1>
+            <p>투자자를 위한 종합 분석 보고서</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 좌측: 회사 목록 -->
+            <aside class="sidebar">
+                <h2>상장 기업</h2>
+                
+                <!-- 검색창 -->
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="search-input" 
+                        placeholder="제목, 회사명으로 검색..."
+                    >
+                    <button id="searchBtn" class="search-btn">🔍</button>
+                </div>
+
+                <div id="companiesList" class="companies-list">
+                    <!-- JavaScript로 동적 로드 -->
+                </div>
+            </aside>
+
+            <!-- 우측: 보고서 내용 -->
+            <main class="report-area">
+                <div id="reportContainer">
+                    <div class="placeholder">
+                        <p>좌측에서 회사를 선택하면 보고서가 표시됩니다.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 깔깔 주식 보고서 | Powered by OpenClaw</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
