@@ -224,43 +224,61 @@ async function displayLatestReports() {
     }
 }
 
-// 모든 문서를 나열
+// 모든 문서를 나열 (최신순 내림차순)
 function renderAllDocuments() {
     const companiesList = document.getElementById('companiesList');
     companiesList.innerHTML = '';
 
+    // 모든 문서를 배열로 수집
+    const allDocs = [];
     companiesData.forEach(company => {
         company.documents.forEach(doc => {
-            const docDiv = document.createElement('div');
-            docDiv.style.padding = '0.75rem 1rem';
-            docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderRadius = '6px';
-            docDiv.style.marginBottom = '0.5rem';
-            docDiv.style.cursor = 'pointer';
-            docDiv.style.borderLeft = '4px solid #ddd';
-            docDiv.style.transition = 'all 0.3s ease';
-            
-            // 마우스 오버 효과
-            docDiv.addEventListener('mouseenter', () => {
-                docDiv.style.backgroundColor = '#f0f0f0';
-                docDiv.style.borderLeftColor = '#667eea';
+            allDocs.push({
+                company: company,
+                doc: doc,
+                dateKey: doc.date.replace(/[^\d]/g, '')
             });
-            docDiv.addEventListener('mouseleave', () => {
-                docDiv.style.backgroundColor = '#f9f9f9';
-                docDiv.style.borderLeftColor = '#ddd';
-            });
-            
-            docDiv.innerHTML = `
-                <div style="font-weight: 600; margin-bottom: 0.2rem;">${doc.title}</div>
-                <div style="font-size: 0.85rem; color: #999;">${company.name} • ${doc.date}</div>
-            `;
-            
-            docDiv.addEventListener('click', (e) => {
-                selectDocument(company, doc);
-            });
-            
-            companiesList.appendChild(docDiv);
         });
+    });
+
+    // 최신순으로 정렬 (내림차순)
+    allDocs.sort((a, b) => b.dateKey - a.dateKey);
+
+    // 정렬된 문서 표시
+    allDocs.forEach((item, index) => {
+        const docDiv = document.createElement('div');
+        docDiv.style.padding = '0.75rem 1rem';
+        docDiv.style.backgroundColor = '#f9f9f9';
+        docDiv.style.borderRadius = '6px';
+        docDiv.style.marginBottom = '0.5rem';
+        docDiv.style.cursor = 'pointer';
+        docDiv.style.borderLeft = '4px solid #ddd';
+        docDiv.style.transition = 'all 0.3s ease';
+        
+        // 마우스 오버 효과
+        docDiv.addEventListener('mouseenter', () => {
+            docDiv.style.backgroundColor = '#f0f0f0';
+            docDiv.style.borderLeftColor = '#667eea';
+        });
+        docDiv.addEventListener('mouseleave', () => {
+            docDiv.style.backgroundColor = '#f9f9f9';
+            docDiv.style.borderLeftColor = '#ddd';
+        });
+        
+        docDiv.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333;">
+                ${index + 1}. ${item.doc.title}
+            </div>
+            <div style="font-size: 0.85rem; color: #999;">
+                ${item.company.name} • ${item.doc.date}
+            </div>
+        `;
+        
+        docDiv.addEventListener('click', (e) => {
+            selectDocument(item.company, item.doc);
+        });
+        
+        companiesList.appendChild(docDiv);
     });
 }
 
@@ -294,7 +312,7 @@ function performSearch() {
     renderSearchResults(results, query);
 }
 
-// 검색 결과 렌더링
+// 검색 결과 렌더링 (최신순 내림차순)
 function renderSearchResults(results, query) {
     const companiesList = document.getElementById('companiesList');
     companiesList.innerHTML = '';
@@ -304,39 +322,56 @@ function renderSearchResults(results, query) {
         return;
     }
 
-    // 각 회사의 매칭 문서들만 표시
+    // 검색 결과 문서들을 배열로 수집
+    const allSearchDocs = [];
     results.forEach(company => {
         company.documents.forEach(doc => {
-            const docDiv = document.createElement('div');
-            docDiv.style.padding = '0.75rem 1rem';
-            docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderRadius = '6px';
-            docDiv.style.marginBottom = '0.5rem';
-            docDiv.style.cursor = 'pointer';
-            docDiv.style.borderLeft = '4px solid #ddd';
-            docDiv.style.transition = 'all 0.3s ease';
-            
-            // 마우스 오버 효과
-            docDiv.addEventListener('mouseenter', () => {
-                docDiv.style.backgroundColor = '#f0f0f0';
-                docDiv.style.borderLeftColor = '#667eea';
+            allSearchDocs.push({
+                company: company,
+                doc: doc,
+                dateKey: doc.date.replace(/[^\d]/g, '')
             });
-            docDiv.addEventListener('mouseleave', () => {
-                docDiv.style.backgroundColor = '#f9f9f9';
-                docDiv.style.borderLeftColor = '#ddd';
-            });
-            
-            docDiv.innerHTML = `
-                <div style="font-weight: 600; margin-bottom: 0.2rem;">${doc.title}</div>
-                <div style="font-size: 0.85rem; color: #999;">${company.name} • ${doc.date}</div>
-            `;
-            
-            docDiv.addEventListener('click', (e) => {
-                selectDocument(company, doc);
-            });
-            
-            companiesList.appendChild(docDiv);
         });
+    });
+
+    // 최신순으로 정렬 (내림차순)
+    allSearchDocs.sort((a, b) => b.dateKey - a.dateKey);
+
+    // 정렬된 검색 결과 표시
+    allSearchDocs.forEach((item, index) => {
+        const docDiv = document.createElement('div');
+        docDiv.style.padding = '0.75rem 1rem';
+        docDiv.style.backgroundColor = '#f9f9f9';
+        docDiv.style.borderRadius = '6px';
+        docDiv.style.marginBottom = '0.5rem';
+        docDiv.style.cursor = 'pointer';
+        docDiv.style.borderLeft = '4px solid #667eea';
+        docDiv.style.transition = 'all 0.3s ease';
+        
+        // 마우스 오버 효과
+        docDiv.addEventListener('mouseenter', () => {
+            docDiv.style.backgroundColor = '#f0f0f0';
+            docDiv.style.borderLeftColor = '#667eea';
+        });
+        docDiv.addEventListener('mouseleave', () => {
+            docDiv.style.backgroundColor = '#f9f9f9';
+            docDiv.style.borderLeftColor = '#667eea';
+        });
+        
+        docDiv.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333;">
+                ${index + 1}. ${item.doc.title}
+            </div>
+            <div style="font-size: 0.85rem; color: #999;">
+                ${item.company.name} • ${item.doc.date}
+            </div>
+        `;
+        
+        docDiv.addEventListener('click', (e) => {
+            selectDocument(item.company, item.doc);
+        });
+        
+        companiesList.appendChild(docDiv);
     });
 }
 
