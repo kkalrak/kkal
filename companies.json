@@ -58,5 +58,19 @@
         }
       ]
     }
+  ],
+  "specials": [
+    {
+      "id": "macroeconomics",
+      "name": "거시경제",
+      "ticker": "-",
+      "documents": [
+        {
+          "title": "이란 전쟁과 미국 경제: 시나리오 분석",
+          "file": "202603182346.md",
+          "date": "2026-03-18 23:46"
+        }
+      ]
+    }
   ]
 }

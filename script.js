@@ -17,7 +17,13 @@ async function loadCompanies() {
         const response = await fetch('companies.json');
         const data = await response.json();
         companiesData = data.companies;
-        console.log('회사 목록 로드 완료:', companiesData.length, '개 회사');
+        
+        // specials 섹션이 있으면 추가
+        if (data.specials && Array.isArray(data.specials)) {
+            companiesData = companiesData.concat(data.specials);
+        }
+        
+        console.log('회사 목록 로드 완료:', companiesData.length, '개 항목');
         return true;
     } catch (error) {
         console.error('회사 목록 로드 실패:', error);
