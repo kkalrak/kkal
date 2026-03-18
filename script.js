@@ -2,13 +2,13 @@
 let companiesData = [];
 
 // 페이지 로드 시 초기화
-document.addEventListener('DOMContentLoaded', () => {
-    loadCompanies();
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadCompanies();
     setupSearch();
     // 초기에 모든 문서를 나열
     renderAllDocuments();
     // 최신 10개 보고서를 전체 내용과 함께 표시
-    displayLatestReports();
+    await displayLatestReports();
 });
 
 // companies.json 로드
@@ -17,8 +17,11 @@ async function loadCompanies() {
         const response = await fetch('companies.json');
         const data = await response.json();
         companiesData = data.companies;
+        console.log('회사 목록 로드 완료:', companiesData.length, '개 회사');
+        return true;
     } catch (error) {
         console.error('회사 목록 로드 실패:', error);
+        return false;
     }
 }
 
@@ -71,6 +74,14 @@ function setupSearch() {
 // 최신 10개 보고서를 전체 내용과 함께 표시
 async function displayLatestReports() {
     try {
+        console.log('최신 보고서 로드 시작, companiesData:', companiesData);
+        
+        if (!companiesData || companiesData.length === 0) {
+            console.error('companiesData가 비어있음');
+            document.getElementById('reportContainer').innerHTML = '<p>데이터 로드 실패. 페이지를 새로고침 해주세요.</p>';
+            return;
+        }
+        
         // 모든 문서를 날짜순으로 정렬
         const allDocuments = [];
         
@@ -87,6 +98,8 @@ async function displayLatestReports() {
         // 최신순으로 정렬
         allDocuments.sort((a, b) => b.dateKey - a.dateKey);
         const latestTen = allDocuments.slice(0, 10);
+        
+        console.log('최신 10개 보고서:', latestTen);
         
         // 헤더 표시
         const reportContainer = document.getElementById('reportContainer');
