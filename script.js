@@ -79,27 +79,39 @@ async function displayLatestReports() {
                 allDocuments.push({
                     company: company,
                     document: doc,
-                    // 날짜 형식을 정렬 가능하도록 변환 (예: "2026-03-18 17:11")
-                    dateKey: doc.date.replace(/[^\d]/g, '') // 숫자만 추출
+                    dateKey: doc.date.replace(/[^\d]/g, '')
                 });
             });
         });
         
-        // 최신순으로 정렬 (역순)
+        // 최신순으로 정렬
         allDocuments.sort((a, b) => b.dateKey - a.dateKey);
-        
-        // 최신 10개만 선택
         const latestTen = allDocuments.slice(0, 10);
         
-        // 각 보고서의 내용을 로드
+        // 헤더 표시
+        const reportContainer = document.getElementById('reportContainer');
+        reportContainer.innerHTML = `
+            <div class="latest-reports-container">
+                <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 3px solid #667eea;">
+                    <h2 style="margin: 0 0 0.5rem 0; color: #333; font-size: 2rem;">📰 최신 게시물 TOP 10</h2>
+                    <p style="margin: 0; color: #666; font-size: 1.1rem;">가장 최근에 작성된 10개의 분석 보고서</p>
+                </div>
+                <div id="reportsContent" style="margin-top: 2rem;">
+                    <p style="color: #999; text-align: center;">보고서 로딩 중...</p>
+                </div>
+            </div>
+        `;
+        
+        // 각 보고서 로드
         let htmlContent = '';
+        let loadCount = 0;
         
         for (const item of latestTen) {
+            loadCount++;
             try {
                 const response = await fetch(`reports/${item.document.file}`);
                 const markdown = await response.text();
                 
-                // marked 사용
                 let documentHtml;
                 if (typeof window.marked === 'function') {
                     documentHtml = window.marked(markdown);
@@ -107,75 +119,91 @@ async function displayLatestReports() {
                     documentHtml = window.marked.parse(markdown);
                 }
                 
-                // 각 보고서를 카드 형식으로 표시
+                const badgeColor = item.company.id === 'koreazinc' ? '#ff6b6b' : '#667eea';
+                const badgeText = item.company.id === 'koreazinc' ? '🚨 주의' : '📊 분석';
+                
                 htmlContent += `
                     <div class="latest-report-card" style="
                         margin-bottom: 3rem;
-                        padding: 2rem;
-                        background: white;
-                        border: 1px solid #e0e0e0;
-                        border-radius: 8px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-                    ">
+                        padding: 2.5rem;
+                        background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+                        border: 2px solid #e0e0e0;
+                        border-radius: 12px;
+                        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+                        transition: all 0.3s ease;
+                    " 
+                    onmouseover="this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.2)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.1)'; this.style.transform='translateY(0)';">
                         <div style="
                             display: flex;
                             justify-content: space-between;
-                            align-items: start;
-                            margin-bottom: 1rem;
-                            padding-bottom: 1rem;
-                            border-bottom: 2px solid #f0f0f0;
+                            align-items: flex-start;
+                            margin-bottom: 1.5rem;
+                            padding-bottom: 1.5rem;
+                            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
                         ">
-                            <div>
-                                <h3 style="margin: 0 0 0.5rem 0; color: #333;">${item.document.title}</h3>
-                                <p style="margin: 0; color: #999; font-size: 0.9rem;">
-                                    <strong>${item.company.name}</strong> (${item.company.ticker}) • ${item.document.date}
+                            <div style="flex: 1;">
+                                <div style="
+                                    display: inline-block;
+                                    padding: 0.4rem 0.8rem;
+                                    background: ${badgeColor};
+                                    color: white;
+                                    border-radius: 4px;
+                                    font-size: 0.75rem;
+                                    font-weight: bold;
+                                    margin-bottom: 0.5rem;
+                                ">${badgeText} • ${loadCount}/10</div>
+                                <h3 style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.3rem; line-height: 1.4;">
+                                    ${item.document.title}
+                                </h3>
+                                <p style="margin: 0.5rem 0 0 0; color: #999; font-size: 0.95rem;">
+                                    <strong style="color: #667eea;">${item.company.name}</strong> (${item.company.ticker}) • ${item.document.date}
                                 </p>
                             </div>
                             <a href="#" onclick="loadDocument('reports/${item.document.file}'); return false;" 
                                style="
-                                padding: 0.5rem 1rem;
+                                padding: 0.7rem 1.5rem;
                                 background: #667eea;
                                 color: white;
                                 text-decoration: none;
-                                border-radius: 4px;
-                                font-size: 0.85rem;
+                                border-radius: 6px;
+                                font-size: 0.9rem;
+                                font-weight: bold;
                                 white-space: nowrap;
-                            ">전체 보기</a>
+                                margin-left: 1rem;
+                                transition: all 0.2s ease;
+                            "
+                            onmouseover="this.style.background='#5568d3'; this.style.transform='scale(1.05)';"
+                            onmouseout="this.style.background='#667eea'; this.style.transform='scale(1)';">
+                                📄 전체 보기
+                            </a>
                         </div>
                         <div class="report-content" style="
                             font-size: 0.95rem;
-                            line-height: 1.6;
-                            color: #333;
-                        ">${documentHtml}</div>
+                            line-height: 1.7;
+                            color: #555;
+                        ">
+                            ${documentHtml}
+                        </div>
                     </div>
                 `;
             } catch (error) {
                 console.error(`보고서 로드 실패: ${item.document.file}`, error);
                 htmlContent += `
-                    <div class="latest-report-card" style="
+                    <div style="
                         margin-bottom: 3rem;
                         padding: 2rem;
                         background: #fff3cd;
-                        border: 1px solid #ffc107;
+                        border: 2px solid #ffc107;
                         border-radius: 8px;
                     ">
-                        <p>보고서를 불러올 수 없습니다: ${item.document.title}</p>
+                        <p style="color: #856404;">⚠️ 보고서를 불러올 수 없습니다: ${item.document.title}</p>
                     </div>
                 `;
             }
         }
         
-        // 최종 HTML을 reportContainer에 표시
-        const reportContainer = document.getElementById('reportContainer');
-        reportContainer.innerHTML = `
-            <div class="latest-reports-container">
-                <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 2px solid #e0e0e0;">
-                    <h2 style="margin: 0 0 0.5rem 0;">📰 최신 게시물</h2>
-                    <p style="margin: 0; color: #666;">총 ${latestTen.length}개의 최신 보고서입니다.</p>
-                </div>
-                ${htmlContent}
-            </div>
-        `;
+        document.getElementById('reportsContent').innerHTML = htmlContent;
     } catch (error) {
         console.error('최신 보고서 로드 실패:', error);
         const reportContainer = document.getElementById('reportContainer');
