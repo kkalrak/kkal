@@ -49,6 +49,52 @@ function updateMetaTags(title, description, url) {
     document.title = title + ' - 깔깔 주식 보고서';
 }
 
+// Schema.org Article 스키마 동적 업데이트
+function updateArticleSchema(title, description, datePublished, url) {
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": title,
+        "description": description,
+        "url": url,
+        "datePublished": datePublished,
+        "dateModified": new Date().toISOString().split('T')[0],
+        "author": {
+            "@type": "Organization",
+            "name": "깔깔 주식 보고서"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "깔깔 주식 보고서",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://kkal-stock-reports.pages.dev/",
+                "width": 100,
+                "height": 100
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": url
+        }
+    };
+    
+    // 기존 article-schema 제거
+    const existingSchema = document.getElementById('article-schema');
+    if (existingSchema) {
+        existingSchema.remove();
+    }
+    
+    // 새로운 스키마 추가
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'article-schema';
+    script.textContent = JSON.stringify(articleSchema);
+    document.head.appendChild(script);
+    
+    console.log('📊 Schema.org 업데이트:', title);
+}
+
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', async () => {
     await loadCompanies();
@@ -101,6 +147,7 @@ async function loadDocument(filePath) {
         const lines = markdown.split('\n');
         let title = '깔깔 주식 보고서';
         let description = '투자자를 위한 종합 분석 플랫폼';
+        let datePublished = new Date().toISOString().split('T')[0];
         
         // # 제목 찾기
         for (let i = 0; i < Math.min(5, lines.length); i++) {
@@ -110,11 +157,20 @@ async function loadDocument(filePath) {
             }
         }
         
+        // 작성일 찾기 (작성일: YYYY-MM-DD 형식)
+        for (let i = 0; i < Math.min(10, lines.length); i++) {
+            const dateMatch = lines[i].match(/(\d{4}-\d{2}-\d{2})/);
+            if (dateMatch) {
+                datePublished = dateMatch[1];
+                break;
+            }
+        }
+        
         // 설명 찾기 (Executive Summary 섹션의 첫 문장들)
         let foundSummary = false;
         let summaryText = '';
         for (let i = 0; i < lines.length; i++) {
-            if (lines[i].includes('Executive Summary') || lines[i].includes('요약')) {
+            if (lines[i].includes('Executive Summary') || lines[i].includes('요약') || lines[i].includes('Summary')) {
                 foundSummary = true;
                 continue;
             }
@@ -129,9 +185,10 @@ async function loadDocument(filePath) {
             description = summaryText.substring(0, 150).replace(/```/g, '').replace(/[*`]/g, '').trim();
         }
         
-        // OG 태그 업데이트
+        // OG 태그 + Schema.org 업데이트
         const fullUrl = window.location.href;
         updateMetaTags(title, description, fullUrl);
+        updateArticleSchema(title, description, datePublished, fullUrl);
         
         // marked 사용 (window.marked)
         let html;
