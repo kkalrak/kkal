@@ -256,6 +256,15 @@ footer {
         position: static;
     }
 
+    .search-box {
+        margin-bottom: 1rem;
+    }
+
+    /* 모바일에서 검색 아래 글 목록 숨기기 */
+    .companies-list {
+        display: none;
+    }
+
     header h1 {
         font-size: 1.8rem;
     }
