@@ -254,8 +254,8 @@ async function displayLatestReports() {
                 
                 htmlContent += `
                     <div class="latest-report-card" style="
-                        margin-bottom: 3rem;
-                        padding: 2.5rem;
+                        margin-bottom: 2rem;
+                        padding: 1.8rem;
                         background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
                         border: 2px solid #e0e0e0;
                         border-radius: 12px;
@@ -268,8 +268,8 @@ async function displayLatestReports() {
                             display: flex;
                             justify-content: space-between;
                             align-items: flex-start;
-                            margin-bottom: 1.5rem;
-                            padding-bottom: 1.5rem;
+                            margin-bottom: 1rem;
+                            padding-bottom: 1rem;
                             border-bottom: 2px solid rgba(102, 126, 234, 0.1);
                         ">
                             <div style="flex: 1;">
