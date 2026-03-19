@@ -61,6 +61,18 @@
   ],
   "specials": [
     {
+      "id": "longevity",
+      "name": "생명과학 & 노화",
+      "ticker": "-",
+      "documents": [
+        {
+          "title": "장내 미생물이 뇌를 조종한다: 노화는 필연이 아니다",
+          "file": "202603191855.md",
+          "date": "2026-03-19 18:55"
+        }
+      ]
+    },
+    {
       "id": "spacex",
       "name": "SpaceX (상장 예정)",
       "ticker": "SPACEX (예정)",
