@@ -61,6 +61,18 @@
   ],
   "specials": [
     {
+      "id": "spacex",
+      "name": "SpaceX (상장 예정)",
+      "ticker": "SPACEX (예정)",
+      "documents": [
+        {
+          "title": "SpaceX IPO 분석: 역대 최대 우주기업 상장 임박",
+          "file": "202603191332.md",
+          "date": "2026-03-19 13:32"
+        }
+      ]
+    },
+    {
       "id": "macroeconomics",
       "name": "거시경제",
       "ticker": "-",
