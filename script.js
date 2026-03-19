@@ -1,14 +1,30 @@
 // 글로벌 상태
 let companiesData = [];
 
+// URL 파라미터 파싱 함수
+function getUrlParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+}
+
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', async () => {
     await loadCompanies();
     setupSearch();
-    // 초기에 모든 문서를 나열
-    renderAllDocuments();
-    // 최신 10개 보고서를 전체 내용과 함께 표시
-    await displayLatestReports();
+    
+    // URL에서 report 파라미터 확인
+    const reportParam = getUrlParam('report');
+    
+    if (reportParam) {
+        // 특정 보고서가 요청됨
+        const decodedReport = decodeURIComponent(reportParam);
+        loadDocument(`reports/${decodedReport}`);
+    } else {
+        // 초기에 모든 문서를 나열
+        renderAllDocuments();
+        // 최신 10개 보고서를 전체 내용과 함께 표시
+        await displayLatestReports();
+    }
 });
 
 // companies.json 로드
@@ -388,5 +404,10 @@ function printReport() {
 
 // 문서 선택 및 로드
 function selectDocument(company, document) {
+    // URL 업데이트 (브라우저 주소창에 반영)
+    const newUrl = `?report=${encodeURIComponent(document.file)}`;
+    window.history.pushState({ report: document.file }, document.title, newUrl);
+    
+    // 문서 로드
     loadDocument(`reports/${document.file}`);
 }
