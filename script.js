@@ -255,11 +255,11 @@ async function displayLatestReports() {
                 htmlContent += `
                     <div class="latest-report-card" style="
                         margin-bottom: 2rem;
-                        padding: 1.8rem;
+                        padding: 1.2rem;
                         background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
-                        border: 2px solid #e0e0e0;
-                        border-radius: 12px;
-                        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+                        border: 1px solid #e0e0e0;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.08);
                         transition: all 0.3s ease;
                     " 
                     onmouseover="this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.2)'; this.style.transform='translateY(-2px)';"
