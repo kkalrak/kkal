@@ -411,3 +411,80 @@ function selectDocument(company, document) {
     // 문서 로드
     loadDocument(`reports/${document.file}`);
 }
+
+// 현재 페이지 링크 복사 함수
+function copyCurrentLink() {
+    const url = window.location.href;
+    
+    // 클립보드에 복사
+    navigator.clipboard.writeText(url).then(() => {
+        // 복사 성공 - 버튼 피드백
+        const button = event.target;
+        const originalText = button.innerHTML;
+        button.innerHTML = '✅ 링크 복사됨!';
+        button.style.background = '#4CAF50';
+        
+        // 2초 후 원래 상태로 복구
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = '#667eea';
+        }, 2000);
+    }).catch(err => {
+        alert('링크 복사 실패: ' + err);
+    });
+}
+
+// 문서 로드 시 링크 복사 버튼 추가
+const originalLoadDocument = loadDocument;
+loadDocument = async function(filePath) {
+    // 원래 함수 실행
+    await originalLoadDocument(filePath);
+    
+    // 링크 복사 버튼 추가
+    const reportContainer = document.getElementById('reportContainer');
+    
+    // 기존 버튼 제거
+    const existingButton = document.getElementById('copyLinkButton');
+    if (existingButton) {
+        existingButton.remove();
+    }
+    
+    // 새 버튼 생성
+    const copyButton = document.createElement('div');
+    copyButton.id = 'copyLinkButton';
+    copyButton.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: bold;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    `;
+    copyButton.innerHTML = '🔗 링크 복사';
+    copyButton.onclick = copyCurrentLink;
+    
+    // 마우스 오버 효과
+    copyButton.addEventListener('mouseenter', () => {
+        copyButton.style.background = '#5568d3';
+        copyButton.style.transform = 'scale(1.05)';
+        copyButton.style.boxShadow = '0 6px 16px rgba(102, 126, 234, 0.4)';
+    });
+    copyButton.addEventListener('mouseleave', () => {
+        copyButton.style.background = '#667eea';
+        copyButton.style.transform = 'scale(1)';
+        copyButton.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+    });
+    
+    document.body.appendChild(copyButton);
+};
