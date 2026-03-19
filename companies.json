@@ -61,6 +61,23 @@
   ],
   "specials": [
     {
+      "id": "viome",
+      "name": "Viome (마이크로바이옴 AI)",
+      "ticker": "PRIVATE",
+      "documents": [
+        {
+          "title": "Viome - AI 기반 마이크로바이옴 분석 플랫폼 (한국어)",
+          "file": "202603192309_KOR.md",
+          "date": "2026-03-19 23:09"
+        },
+        {
+          "title": "Viome - AI-Powered Microbiome Analysis Platform (English)",
+          "file": "202603192309_ENG.md",
+          "date": "2026-03-19 23:09"
+        }
+      ]
+    },
+    {
       "id": "longevity",
       "name": "생명과학 & 노화",
       "ticker": "-",
