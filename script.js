@@ -413,13 +413,13 @@ function selectDocument(company, document) {
 }
 
 // 현재 페이지 링크 복사 함수
-function copyCurrentLink() {
+function copyCurrentLink(e) {
     const url = window.location.href;
+    const button = e.currentTarget;
     
     // 클립보드에 복사
     navigator.clipboard.writeText(url).then(() => {
         // 복사 성공 - 버튼 피드백
-        const button = event.target;
         const originalText = button.innerHTML;
         button.innerHTML = '✅ 링크 복사됨!';
         button.style.background = '#4CAF50';
@@ -472,7 +472,7 @@ loadDocument = async function(filePath) {
         gap: 0.5rem;
     `;
     copyButton.innerHTML = '🔗 링크 복사';
-    copyButton.onclick = copyCurrentLink;
+    copyButton.addEventListener('click', copyCurrentLink);
     
     // 마우스 오버 효과
     copyButton.addEventListener('mouseenter', () => {
