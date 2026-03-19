@@ -345,6 +345,7 @@ async function displayLatestReports() {
 function renderAllDocuments() {
     const companiesList = document.getElementById('companiesList');
     companiesList.innerHTML = '';
+    companiesList.classList.add('initial'); // 초기 목록에 'initial' 클래스 추가
 
     // 모든 문서를 배열로 수집
     const allDocs = [];
@@ -433,6 +434,7 @@ function performSearch() {
 function renderSearchResults(results, query) {
     const companiesList = document.getElementById('companiesList');
     companiesList.innerHTML = '';
+    companiesList.classList.remove('initial'); // 검색 결과는 'initial' 클래스 제거
 
     if (results.length === 0) {
         companiesList.innerHTML = `<p style="color: #999; font-size: 0.9rem;">검색 결과 없음: "${query}"</p>`;

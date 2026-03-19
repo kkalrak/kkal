@@ -260,9 +260,14 @@ footer {
         margin-bottom: 1rem;
     }
 
-    /* 모바일에서 검색 아래 글 목록 숨기기 */
-    .companies-list {
+    /* 모바일에서 초기 글 목록 숨기기 (검색 결과는 보임) */
+    .companies-list.initial {
         display: none;
+    }
+
+    /* 검색 결과는 항상 표시 */
+    .companies-list:not(.initial) {
+        display: block;
     }
 
     header h1 {
