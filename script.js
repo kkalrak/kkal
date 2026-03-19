@@ -7,48 +7,6 @@ function getUrlParam(param) {
     return params.get(param);
 }
 
-// 동적 OG 태그 업데이트 함수
-function updateMetaTags(title, description, url) {
-    // 기존 og:title 제거 후 새로 추가
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (!ogTitle) {
-        ogTitle = document.createElement('meta');
-        ogTitle.setAttribute('property', 'og:title');
-        document.head.appendChild(ogTitle);
-    }
-    ogTitle.setAttribute('content', title);
-    
-    // og:description 업데이트
-    let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (!ogDesc) {
-        ogDesc = document.createElement('meta');
-        ogDesc.setAttribute('property', 'og:description');
-        document.head.appendChild(ogDesc);
-    }
-    ogDesc.setAttribute('content', description);
-    
-    // og:url 업데이트
-    let ogUrl = document.querySelector('meta[property="og:url"]');
-    if (!ogUrl) {
-        ogUrl = document.createElement('meta');
-        ogUrl.setAttribute('property', 'og:url');
-        document.head.appendChild(ogUrl);
-    }
-    ogUrl.setAttribute('content', url);
-    
-    // Twitter card 업데이트
-    let twitterDesc = document.querySelector('meta[name="twitter:description"]');
-    if (!twitterDesc) {
-        twitterDesc = document.createElement('meta');
-        twitterDesc.setAttribute('name', 'twitter:description');
-        document.head.appendChild(twitterDesc);
-    }
-    twitterDesc.setAttribute('content', description);
-    
-    // 페이지 제목 업데이트 (브라우저 탭)
-    document.title = title + ' - 깔깔 주식 보고서';
-}
-
 // Schema.org Article 스키마 동적 업데이트
 function updateArticleSchema(title, description, datePublished, url) {
     const articleSchema = {
@@ -185,10 +143,12 @@ async function loadDocument(filePath) {
             description = summaryText.substring(0, 150).replace(/```/g, '').replace(/[*`]/g, '').trim();
         }
         
-        // OG 태그 + Schema.org 업데이트
+        // Schema.org 업데이트 (Google 검색 최적화)
         const fullUrl = window.location.href;
-        updateMetaTags(title, description, fullUrl);
         updateArticleSchema(title, description, datePublished, fullUrl);
+        
+        // 브라우저 탭 제목 업데이트
+        document.title = title + ' - 깔깔 주식 보고서';
         
         // marked 사용 (window.marked)
         let html;
