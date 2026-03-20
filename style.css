@@ -100,7 +100,30 @@ header p {
     background-color: #764ba2;
 }
 
+/* 사이드바 보고서 목록 스크롤 */
+.companies-list {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
 
+.companies-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.companies-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.companies-list::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 3px;
+}
+
+.companies-list::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}
 
 .report-area {
     flex: 1;
