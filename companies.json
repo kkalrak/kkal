@@ -102,6 +102,18 @@
       ]
     },
     {
+      "id": "consumer",
+      "name": "소비자정보 & 법률",
+      "ticker": "-",
+      "documents": [
+        {
+          "title": "쿠팡 개인정보 유출 보상금 신청 완벽 가이드",
+          "file": "202603201201.md",
+          "date": "2026-03-20 12:01"
+        }
+      ]
+    },
+    {
       "id": "macroeconomics",
       "name": "거시경제 & 중동 분석",
       "ticker": "-",
