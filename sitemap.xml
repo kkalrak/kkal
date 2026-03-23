@@ -1,39 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- 메인 페이지 -->
     <url>
-        <loc>https://kkal.pages.dev/</loc>
-        <lastmod>2026-03-19</lastmod>
-        <changefreq>weekly</changefreq>
+        <loc>https://kkal-stock-reports.pages.dev/</loc>
+        <lastmod>2026-03-23</lastmod>
+        <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
+
+    <!-- 회사 분석 (5개) -->
     <url>
-        <loc>https://kkal.pages.dev/?company=samsung</loc>
+        <loc>https://kkal-stock-reports.pages.dev/?company=samsung</loc>
         <lastmod>2026-03-17</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://kkal.pages.dev/?company=naver</loc>
+        <loc>https://kkal-stock-reports.pages.dev/?company=naver</loc>
         <lastmod>2026-03-17</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://kkal.pages.dev/?company=kakao</loc>
+        <loc>https://kkal-stock-reports.pages.dev/?company=kakao</loc>
         <lastmod>2026-03-17</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://kkal.pages.dev/?company=koreazinc</loc>
+        <loc>https://kkal-stock-reports.pages.dev/?company=koreazinc</loc>
         <lastmod>2026-03-18</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+
+    <!-- 신규 IPO (1개) -->
     <url>
-        <loc>https://kkal.pages.dev/?company=macroeconomics</loc>
-        <lastmod>2026-03-18</lastmod>
+        <loc>https://kkal-stock-reports.pages.dev/?company=spacex</loc>
+        <lastmod>2026-03-19</lastmod>
         <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 생명과학 (1개) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?company=longevity</loc>
+        <lastmod>2026-03-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Viome (2개) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?company=viome</loc>
+        <lastmod>2026-03-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- 거시경제 & 중동 분석 (8개) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?company=macroeconomics</loc>
+        <lastmod>2026-03-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- 소비자정보 & 법률 (1개) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?company=consumer</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- 금융정책 & 투자전략 (2개) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?company=policy</loc>
+        <lastmod>2026-03-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- 최신 보고서들 (개별 URL - 검색 최적화용) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603232020</loc>
+        <lastmod>2026-03-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603221948</loc>
+        <lastmod>2026-03-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603210944</loc>
+        <lastmod>2026-03-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603201413</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603201405</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603201201</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603201126</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603201229</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
 </urlset>
