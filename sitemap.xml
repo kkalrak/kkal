@@ -61,7 +61,7 @@
     <!-- 거시경제 & 중동 분석 (9개) -->
     <url>
         <loc>https://kkal-stock-reports.pages.dev/?company=macroeconomics</loc>
-        <lastmod>2026-03-24</lastmod>
+        <lastmod>2026-03-25</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
@@ -83,6 +83,12 @@
     </url>
 
     <!-- 최신 보고서들 (개별 URL - 검색 최적화용) -->
+    <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603250748</loc>
+        <lastmod>2026-03-25</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
     <url>
         <loc>https://kkal-stock-reports.pages.dev/?report=202603240706</loc>
         <lastmod>2026-03-24</lastmod>
