@@ -114,6 +114,18 @@
       ]
     },
     {
+      "id": "defense",
+      "name": "한국 방산 & 안보",
+      "ticker": "-",
+      "documents": [
+        {
+          "title": "천무2 vs CIWS-II: 한국 미래 방공망의 두 축",
+          "file": "202603252050.md",
+          "date": "2026-03-25 20:50"
+        }
+      ]
+    },
+    {
       "id": "policy",
       "name": "금융정책 & 투자전략",
       "ticker": "-",
