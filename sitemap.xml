@@ -92,6 +92,12 @@
 
     <!-- 최신 보고서들 (개별 URL - 검색 최적화용) -->
     <url>
+        <loc>https://kkal-stock-reports.pages.dev/?report=202603272341</loc>
+        <lastmod>2026-03-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://kkal-stock-reports.pages.dev/?report=202603270848</loc>
         <lastmod>2026-03-27</lastmod>
         <changefreq>monthly</changefreq>
