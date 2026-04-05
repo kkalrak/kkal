@@ -320,9 +320,48 @@ footer {
         margin-bottom: 0.3rem;
     }
 
+    /* ===== 모바일 테이블 최적화 (카드형 레이아웃) ===== */
     .report-content table {
-        margin-bottom: 0.8rem;
+        display: block; /* 테이블을 블록 요소로 변경 */
+        width: 100%;
+        margin-bottom: 1rem;
+        border: none;
     }
+
+    .report-content tr {
+        display: block; /* 각 행을 하나의 카드처럼 변경 */
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 0.75rem;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .report-content th,
+    .report-content td {
+        display: block; /* 셀을 세로로 쌓임 */
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #eee;
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+        font-size: 0.95rem;
+    }
+
+    .report-content th {
+        background-color: #f9f9f9;
+        font-weight: bold;
+        color: #667eea;
+        border-bottom: 2px solid #667eea;
+        margin-bottom: 0.5rem;
+    }
+
+    .report-content td:last-child,
+    .report-content th:last-child {
+        border-bottom: none; /* 마지막 셀은 구분선 제거 */
+    }
+    /* ===== 모바일 테이블 최적화 끝 ===== */
 
     .report-content blockquote {
         margin-bottom: 0.8rem;
