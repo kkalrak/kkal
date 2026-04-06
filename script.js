@@ -384,10 +384,10 @@ function renderAllDocuments() {
         });
         
         docDiv.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333;">
+            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
                 ${index + 1}. ${item.doc.title}
             </div>
-            <div style="font-size: 0.85rem; color: #999;">
+            <div style="font-size: 0.85rem; color: #999; text-align: center;">
                 ${item.company.name} • ${item.doc.date}
             </div>
         `;
@@ -478,10 +478,10 @@ function renderSearchResults(results, query) {
         });
         
         docDiv.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333;">
+            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
                 ${index + 1}. ${item.doc.title}
             </div>
-            <div style="font-size: 0.85rem; color: #999;">
+            <div style="font-size: 0.85rem; color: #999; text-align: center;">
                 ${item.company.name} • ${item.doc.date}
             </div>
         `;
