@@ -272,7 +272,7 @@ async function displayLatestReports() {
                             padding-bottom: 1rem;
                             border-bottom: 2px solid rgba(102, 126, 234, 0.1);
                         ">
-                            <div style="flex: 1;">
+                            <div style="flex: 1; text-align: center;">
                                 <div style="
                                     display: inline-block;
                                     padding: 0.4rem 0.8rem;
