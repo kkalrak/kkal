@@ -266,13 +266,13 @@ async function displayLatestReports() {
                     onmouseout="this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.1)'; this.style.transform='translateY(0)';">
                         <div style="
                             display: flex;
-                            justify-content: space-between;
-                            align-items: flex-start;
+                            flex-direction: column;
+                            align-items: center;
                             margin-bottom: 1rem;
                             padding-bottom: 1rem;
                             border-bottom: 2px solid rgba(102, 126, 234, 0.1);
                         ">
-                            <div style="flex: 1; text-align: center;">
+                            <div style="text-align: center; margin-bottom: 1rem;">
                                 <div style="
                                     display: inline-block;
                                     padding: 0.4rem 0.8rem;
@@ -300,7 +300,6 @@ async function displayLatestReports() {
                                 font-size: 0.9rem;
                                 font-weight: bold;
                                 white-space: nowrap;
-                                margin-left: 1rem;
                                 transition: all 0.2s ease;
                             "
                             onmouseover="this.style.background='#5568d3'; this.style.transform='scale(1.05)';"
