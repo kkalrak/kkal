@@ -101,6 +101,44 @@ header p {
     background-color: #764ba2;
 }
 
+/* 모바일용 게시물 목록 토글 버튼 */
+.mobile-toggle-btn {
+    display: none;
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-toggle-btn:hover {
+    opacity: 0.9;
+}
+
+/* 반응형: 모바일에서 토글 버튼 표시 */
+@media (max-width: 768px) {
+    .mobile-toggle-btn {
+        display: block;
+    }
+    
+    .companies-list {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .companies-list.expanded {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+}
+
 /* 사이드바 보고서 목록 스크롤 */
 .companies-list {
     max-height: 70vh;

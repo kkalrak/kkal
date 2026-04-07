@@ -1,6 +1,20 @@
 // 글로벌 상태
 let companiesData = [];
 
+// 모바일용 게시물 목록 토글 함수
+function toggleCompaniesList() {
+    const companiesList = document.getElementById('companiesList');
+    const toggleBtn = document.getElementById('mobileToggleBtn');
+    
+    if (companiesList.classList.contains('expanded')) {
+        companiesList.classList.remove('expanded');
+        toggleBtn.innerHTML = '📋 최근 게시물 보기';
+    } else {
+        companiesList.classList.add('expanded');
+        toggleBtn.innerHTML = '✕ 목록 닫기';
+    }
+}
+
 // URL 파라미터 파싱 함수
 function getUrlParam(param) {
     const params = new URLSearchParams(window.location.search);
@@ -369,17 +383,17 @@ function renderAllDocuments() {
         docDiv.style.borderRadius = '6px';
         docDiv.style.marginBottom = '0.5rem';
         docDiv.style.cursor = 'pointer';
-        docDiv.style.borderLeft = '4px solid #ddd';
+        docDiv.style.borderLeft = '4px solid #667eea';
         docDiv.style.transition = 'all 0.3s ease';
         
         // 마우스 오버 효과
         docDiv.addEventListener('mouseenter', () => {
             docDiv.style.backgroundColor = '#f0f0f0';
-            docDiv.style.borderLeftColor = '#667eea';
+            docDiv.style.borderLeftColor = '#764ba2';
         });
         docDiv.addEventListener('mouseleave', () => {
             docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderLeftColor = '#ddd';
+            docDiv.style.borderLeftColor = '#667eea';
         });
         
         docDiv.innerHTML = `
