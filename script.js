@@ -40,7 +40,7 @@ function updateArticleSchema(title, description, datePublished, url) {
             "name": "깔깔 주식 보고서",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://kkal-stock-reports.pages.dev/",
+                "url": "https://kkal.pages.dev/",
                 "width": 100,
                 "height": 100
             }
