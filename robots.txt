@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: 
 
-Sitemap: https://kkal-stock-reports.pages.dev/sitemap.xml
+Sitemap: https://kkal.pages.dev/sitemap.xml
