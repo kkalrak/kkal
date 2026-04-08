@@ -92,6 +92,36 @@
 
     <!-- 최신 보고서들 (개별 URL - 검색 최적화용) -->
     <url>
+        <loc>https://kkal.pages.dev/?report=202604081659</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://kkal.pages.dev/?report=202604070952</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://kkal.pages.dev/?report=202604070938</loc>
+        <lastmod>2026-04-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://kkal.pages.dev/?report=202604061702</loc>
+        <lastmod>2026-04-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://kkal.pages.dev/?report=202604052036</loc>
+        <lastmod>2026-04-05</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://kkal.pages.dev/?report=202604041808</loc>
         <lastmod>2026-04-04</lastmod>
         <changefreq>monthly</changefreq>
