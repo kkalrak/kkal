@@ -111,6 +111,12 @@ async function loadCompanies() {
 
 // 문서 로드 및 렌더링
 async function loadDocument(filePath) {
+    // URL 업데이트
+    const fileName = filePath.replace(/^reports\//, '');
+    const newUrl = `?report=${encodeURIComponent(fileName)}`;
+    if (window.location.search !== newUrl) {
+        window.history.pushState({ report: fileName }, '', newUrl);
+    }
     try {
         const response = await fetch(filePath);
         const markdown = await response.text();
@@ -263,7 +269,7 @@ async function displayLatestReports() {
                     documentHtml = window.marked.parse(markdown);
                 }
                 
-                const badgeColor = item.company.id === 'koreazinc' ? '#ff6b6b' : '#667eea';
+                const badgeColor = item.company.id === 'koreazinc' ? '#ff6b6b' : '#2D7DD2';
                 const badgeText = item.company.id === 'koreazinc' ? '🚨 주의' : '📊 분석';
                 
                 htmlContent += `
@@ -317,7 +323,7 @@ async function displayLatestReports() {
                                 transition: all 0.2s ease;
                             "
                             onmouseover="this.style.background='#5568d3'; this.style.transform='scale(1.05)';"
-                            onmouseout="this.style.background='#667eea'; this.style.transform='scale(1)';">
+                            onmouseout="this.style.background='#2D7DD2'; this.style.transform='scale(1)';">
                                 📄 전체 보기
                             </a>
                         </div>
@@ -393,7 +399,7 @@ function renderAllDocuments() {
         });
         docDiv.addEventListener('mouseleave', () => {
             docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderLeftColor = '#667eea';
+            docDiv.style.borderLeftColor = '#2D7DD2';
         });
         
         docDiv.innerHTML = `
@@ -483,11 +489,11 @@ function renderSearchResults(results, query) {
         // 마우스 오버 효과
         docDiv.addEventListener('mouseenter', () => {
             docDiv.style.backgroundColor = '#f0f0f0';
-            docDiv.style.borderLeftColor = '#667eea';
+            docDiv.style.borderLeftColor = '#2D7DD2';
         });
         docDiv.addEventListener('mouseleave', () => {
             docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderLeftColor = '#667eea';
+            docDiv.style.borderLeftColor = '#2D7DD2';
         });
         
         docDiv.innerHTML = `
@@ -537,7 +543,7 @@ function copyCurrentLink(e) {
         // 2초 후 원래 상태로 복구
         setTimeout(() => {
             button.innerHTML = originalText;
-            button.style.background = '#667eea';
+            button.style.background = '#2D7DD2';
         }, 2000);
     }).catch(err => {
         alert('링크 복사 실패: ' + err);
@@ -591,7 +597,7 @@ loadDocument = async function(filePath) {
         copyButton.style.boxShadow = '0 6px 16px rgba(102, 126, 234, 0.4)';
     });
     copyButton.addEventListener('mouseleave', () => {
-        copyButton.style.background = '#667eea';
+        copyButton.style.background = '#2D7DD2';
         copyButton.style.transform = 'scale(1)';
         copyButton.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
     });
