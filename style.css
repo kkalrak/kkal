@@ -19,7 +19,7 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1A3C5E 0%, #2D7DD2 100%);
     color: white;
     padding: 2rem;
     text-align: center;
@@ -61,7 +61,7 @@ header p {
 .sidebar h2 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: #667eea;
+    color: #2D7DD2;
 }
 
 /* 검색창 스타일 */
@@ -82,13 +82,13 @@ header p {
 
 .search-input:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #2D7DD2;
+    box-shadow: 0 0 0 3px rgba(45, 125, 210, 0.1);
 }
 
 .search-btn {
     padding: 0.6rem 1rem;
-    background-color: #667eea;
+    background-color: #2D7DD2;
     color: white;
     border: none;
     border-radius: 6px;
@@ -98,7 +98,7 @@ header p {
 }
 
 .search-btn:hover {
-    background-color: #764ba2;
+    background-color: #2D7DD2;
 }
 
 /* 모바일용 게시물 목록 토글 버튼 */
@@ -106,7 +106,7 @@ header p {
     display: none;
     width: 100%;
     padding: 0.75rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1A3C5E 0%, #2D7DD2 100%);
     color: white;
     border: none;
     border-radius: 6px;
@@ -156,12 +156,12 @@ header p {
 }
 
 .companies-list::-webkit-scrollbar-thumb {
-    background: #667eea;
+    background: #2D7DD2;
     border-radius: 3px;
 }
 
 .companies-list::-webkit-scrollbar-thumb:hover {
-    background: #764ba2;
+    background: #2D7DD2;
 }
 
 .report-area {
@@ -192,14 +192,14 @@ header p {
     font-size: 2rem;
     margin: 1.5rem 0 1rem 0;
     color: #333;
-    border-bottom: 2px solid #667eea;
+    border-bottom: 2px solid #2D7DD2;
     padding-bottom: 0.5rem;
 }
 
 .report-content h2 {
     font-size: 1.5rem;
     margin: 1.5rem 0 0.75rem 0;
-    color: #667eea;
+    color: #2D7DD2;
 }
 
 .report-content h3 {
@@ -241,7 +241,7 @@ header p {
 }
 
 .report-content blockquote {
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #2D7DD2;
     padding-left: 1rem;
     margin-left: 0;
     margin-bottom: 1rem;
@@ -391,8 +391,8 @@ footer {
     .report-content th {
         background-color: #f9f9f9;
         font-weight: bold;
-        color: #667eea;
-        border-bottom: 2px solid #667eea;
+        color: #2D7DD2;
+        border-bottom: 2px solid #2D7DD2;
         margin-bottom: 0.5rem;
     }
 
