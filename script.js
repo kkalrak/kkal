@@ -573,7 +573,7 @@ loadDocument = async function(filePath) {
         top: 20px;
         right: 20px;
         z-index: 1000;
-        background: #667eea;
+        background: #2D7DD2;
         color: white;
         border: none;
         padding: 0.8rem 1.5rem;
@@ -581,7 +581,7 @@ loadDocument = async function(filePath) {
         cursor: pointer;
         font-size: 0.95rem;
         font-weight: bold;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 4px 12px rgba(45, 125, 210, 0.3);
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
