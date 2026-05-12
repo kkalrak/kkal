@@ -21,6 +21,19 @@ function getUrlParam(param) {
     return params.get(param);
 }
 
+// report 파라미터가 확장자 없이 들어와도 실제 파일명으로 보정
+function normalizeReportFileName(fileName) {
+    if (!fileName) {
+        return '';
+    }
+    return fileName.endsWith('.md') ? fileName : `${fileName}.md`;
+}
+
+// companiesData에서 특정 분류 찾기
+function findCompanyById(companyId) {
+    return companiesData.find(company => company.id === companyId);
+}
+
 // Schema.org Article 스키마 동적 업데이트
 function updateArticleSchema(title, description, datePublished, url) {
     const articleSchema = {
@@ -74,11 +87,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // URL에서 report 파라미터 확인
     const reportParam = getUrlParam('report');
+    const companyParam = getUrlParam('company');
+    const searchParam = getUrlParam('search');
     
     if (reportParam) {
         // 특정 보고서가 요청됨
-        const decodedReport = decodeURIComponent(reportParam);
+        const decodedReport = normalizeReportFileName(decodeURIComponent(reportParam));
         loadDocument(`reports/${decodedReport}`);
+    } else if (companyParam) {
+        renderAllDocuments();
+        renderCompanyPage(decodeURIComponent(companyParam));
+    } else if (searchParam) {
+        renderAllDocuments();
+        const searchInput = document.getElementById('searchInput');
+        searchInput.value = decodeURIComponent(searchParam);
+        performSearch();
+        renderSearchIntro(searchInput.value);
     } else {
         // 초기에 모든 문서를 나열
         renderAllDocuments();
@@ -119,6 +143,9 @@ async function loadDocument(filePath) {
     }
     try {
         const response = await fetch(filePath);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status} - ${filePath}`);
+        }
         const markdown = await response.text();
         
         // 마크다운에서 제목과 요약 추출
@@ -260,6 +287,9 @@ async function displayLatestReports() {
             loadCount++;
             try {
                 const response = await fetch(`reports/${item.document.file}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
                 const markdown = await response.text();
                 
                 let documentHtml;
@@ -358,6 +388,79 @@ async function displayLatestReports() {
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `<p style="color: red;">최신 보고서를 불러올 수 없습니다: ${error.message}</p>`;
     }
+}
+
+// company 파라미터용 분류 페이지 렌더링
+function renderCompanyPage(companyId) {
+    const company = findCompanyById(companyId);
+    const reportContainer = document.getElementById('reportContainer');
+
+    if (!company) {
+        reportContainer.innerHTML = `<p style="color: red;">분류를 찾을 수 없습니다: ${companyId}</p>`;
+        return;
+    }
+
+    const docs = company.documents
+        .map(doc => ({
+            ...doc,
+            dateKey: doc.date.replace(/[^\d]/g, '')
+        }))
+        .sort((a, b) => b.dateKey - a.dateKey);
+
+    const companiesList = document.getElementById('companiesList');
+    companiesList.innerHTML = '';
+    companiesList.classList.remove('initial');
+
+    docs.forEach((doc, index) => {
+        const docDiv = document.createElement('div');
+        docDiv.style.padding = '0.75rem 1rem';
+        docDiv.style.backgroundColor = '#f9f9f9';
+        docDiv.style.borderRadius = '6px';
+        docDiv.style.marginBottom = '0.5rem';
+        docDiv.style.cursor = 'pointer';
+        docDiv.style.borderLeft = '4px solid #667eea';
+        docDiv.innerHTML = `
+            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
+                ${index + 1}. ${doc.title}
+            </div>
+            <div style="font-size: 0.85rem; color: #999; text-align: center;">
+                ${company.name} • ${doc.date}
+            </div>
+        `;
+        docDiv.addEventListener('click', () => selectDocument(company, doc));
+        companiesList.appendChild(docDiv);
+    });
+
+    const docLinks = docs.map(doc => `
+        <div style="padding: 1rem 0; border-bottom: 1px solid #eee;">
+            <h3 style="margin: 0 0 0.4rem 0; color: #333;">${doc.title}</h3>
+            <p style="margin: 0 0 0.8rem 0; color: #777;">${company.name} (${company.ticker}) • ${doc.date}</p>
+            <a href="?report=${encodeURIComponent(doc.file)}" onclick="loadDocument('reports/${doc.file}'); return false;" style="color: #2D7DD2; font-weight: 600;">보고서 보기</a>
+        </div>
+    `).join('');
+
+    reportContainer.innerHTML = `
+        <div class="report-content">
+            <h1>${company.name}</h1>
+            <p>${company.ticker}</p>
+            <h2>보고서 목록</h2>
+            ${docLinks}
+        </div>
+    `;
+
+    document.title = `${company.name} - 깔깔 주식 보고서`;
+}
+
+// search 파라미터용 안내 화면
+function renderSearchIntro(query) {
+    const reportContainer = document.getElementById('reportContainer');
+    reportContainer.innerHTML = `
+        <div class="report-content">
+            <h1>검색 결과</h1>
+            <p><strong>${query}</strong> 검색 결과를 왼쪽 목록에서 확인하세요.</p>
+        </div>
+    `;
+    document.title = `"${query}" 검색 결과 - 깔깔 주식 보고서`;
 }
 
 // 모든 문서를 나열 (최신순 내림차순)
@@ -521,11 +624,11 @@ function printReport() {
 // 문서 선택 및 로드
 function selectDocument(company, document) {
     // URL 업데이트 (브라우저 주소창에 반영)
-    const newUrl = `?report=${encodeURIComponent(document.file)}`;
+    const newUrl = `?report=${encodeURIComponent(normalizeReportFileName(document.file))}`;
     window.history.pushState({ report: document.file }, document.title, newUrl);
     
     // 문서 로드
-    loadDocument(`reports/${document.file}`);
+    loadDocument(`reports/${normalizeReportFileName(document.file)}`);
 }
 
 // 현재 페이지 링크 복사 함수
