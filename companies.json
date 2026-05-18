@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: Starship V3 첫 비행이 5월 20일로 하루 연기",
+          "file": "202605190303.md",
+          "date": "2026-05-19 03:03"
+        },
+        {
           "title": "스페이스X 최근 상황: NASA Artemis III 계획으로 Starship HLS 검증 국면 진입",
           "file": "202605182101.md",
           "date": "2026-05-18 21:01"
