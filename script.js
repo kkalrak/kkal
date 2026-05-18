@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         // 초기에 모든 문서를 나열
         renderAllDocuments();
-        // 최신 10개 보고서를 전체 내용과 함께 표시
+        // 최신 2개 보고서를 전체 내용과 함께 표시
         await displayLatestReports();
     }
 });
@@ -235,7 +235,7 @@ function setupSearch() {
     searchInput.addEventListener('input', performSearch);
 }
 
-// 최신 10개 보고서를 전체 내용과 함께 표시
+// 최신 2개 보고서를 전체 내용과 함께 표시
 async function displayLatestReports() {
     try {
         console.log('최신 보고서 로드 시작, companiesData:', companiesData);
@@ -261,17 +261,17 @@ async function displayLatestReports() {
         
         // 최신순으로 정렬
         allDocuments.sort((a, b) => b.dateKey - a.dateKey);
-        const latestTen = allDocuments.slice(0, 10);
+        const latestReports = allDocuments.slice(0, 2);
         
-        console.log('최신 10개 보고서:', latestTen);
+        console.log('최신 2개 보고서:', latestReports);
         
         // 헤더 표시
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `
             <div class="latest-reports-container">
                 <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 3px solid #667eea;">
-                    <h2 style="margin: 0 0 0.5rem 0; color: #333; font-size: 2rem;">📰 최신 게시물 TOP 10</h2>
-                    <p style="margin: 0; color: #666; font-size: 1.1rem;">가장 최근에 작성된 10개의 분석 보고서</p>
+                    <h2 style="margin: 0 0 0.5rem 0; color: #333; font-size: 2rem;">📰 최신 게시물 TOP 2</h2>
+                    <p style="margin: 0; color: #666; font-size: 1.1rem;">가장 최근에 작성된 2개의 분석 보고서</p>
                 </div>
                 <div id="reportsContent" style="margin-top: 2rem;">
                     <p style="color: #999; text-align: center;">보고서 로딩 중...</p>
@@ -283,7 +283,7 @@ async function displayLatestReports() {
         let htmlContent = '';
         let loadCount = 0;
         
-        for (const item of latestTen) {
+        for (const item of latestReports) {
             loadCount++;
             try {
                 const response = await fetch(`reports/${item.document.file}`);
@@ -332,7 +332,7 @@ async function displayLatestReports() {
                                     font-size: 0.75rem;
                                     font-weight: bold;
                                     margin-bottom: 0.5rem;
-                                ">${badgeText} • ${loadCount}/10</div>
+                                ">${badgeText} • ${loadCount}/2</div>
                                 <h3 style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.3rem; line-height: 1.4;">
                                     ${item.document.title}
                                 </h3>
