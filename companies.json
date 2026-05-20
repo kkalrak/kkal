@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: Starbase 사망 사고와 Starship V3 발사 직전 운영 리스크",
+          "file": "202605210602.md",
+          "date": "2026-05-21 06:02"
+        },
+        {
           "title": "스페이스X 최근 상황: 5-for-1 주식분할과 Starship V3 5월 21일 발사 대기",
           "file": "202605200304.md",
           "date": "2026-05-20 03:04"
