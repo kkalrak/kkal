@@ -324,8 +324,12 @@ footer {
     }
 
     /* 모바일에서 초기 글 목록 숨기기 (검색 결과는 보임) */
-    .companies-list.initial {
+    .companies-list.initial:not(.expanded) {
         display: none;
+    }
+
+    .companies-list.initial.expanded {
+        display: block;
     }
 
     /* 검색 결과는 항상 표시 */
