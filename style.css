@@ -294,6 +294,7 @@ header p {
 #reportContainer {
     max-width: 900px;
     margin: 0 auto;
+    min-width: 0;
 }
 
 .placeholder {
@@ -330,15 +331,24 @@ header p {
 .report-content p {
     margin-bottom: 1rem;
     text-align: left;
+    overflow-wrap: anywhere;
 }
 
 .report-content ul, .report-content ol {
     margin-left: 2rem;
     margin-bottom: 1rem;
+    min-width: 0;
 }
 
 .report-content li {
     margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+}
+
+.report-content a {
+    color: var(--accent-dark);
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .report-content table {
@@ -373,6 +383,8 @@ header p {
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     font-family: 'Courier New', monospace;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .report-content pre {
