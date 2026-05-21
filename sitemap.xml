@@ -10,6 +10,12 @@
 
     <!-- 개별 보고서 URL -->
     <url>
+        <loc>https://kkal.pages.dev/?report=202605212106.md</loc>
+        <lastmod>2026-05-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
         <loc>https://kkal.pages.dev/?report=202605212100.md</loc>
         <lastmod>2026-05-21</lastmod>
         <changefreq>monthly</changefreq>
@@ -67,7 +73,7 @@
         <loc>https://kkal.pages.dev/?report=202605200300.md</loc>
         <lastmod>2026-05-20</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://kkal.pages.dev/?report=202605192100.md</loc>
