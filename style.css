@@ -76,11 +76,14 @@ header p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.3rem;
+    width: 2.7rem;
     height: 2.3rem;
     border: 2px solid currentColor;
-    font-size: 1.25rem;
+    font-family: Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
     line-height: 1;
+    letter-spacing: 0;
     color: var(--ink);
     background: var(--paper-light);
     box-shadow: inset 0 -4px 0 rgba(138, 47, 42, 0.16);
