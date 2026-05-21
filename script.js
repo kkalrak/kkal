@@ -1,17 +1,23 @@
 // 글로벌 상태
 let companiesData = [];
+let currentReportFile = '';
 
 // 모바일용 게시물 목록 토글 함수
 function toggleCompaniesList() {
     const companiesList = document.getElementById('companiesList');
     const toggleBtn = document.getElementById('mobileToggleBtn');
+    const searchInput = document.getElementById('searchInput');
     
     if (companiesList.classList.contains('expanded')) {
         companiesList.classList.remove('expanded');
-        toggleBtn.innerHTML = '📋 최근 게시물 보기';
+        toggleBtn.innerHTML = '전체 목록';
     } else {
+        if (searchInput && searchInput.value.trim()) {
+            searchInput.value = '';
+            renderAllDocuments();
+        }
         companiesList.classList.add('expanded');
-        toggleBtn.innerHTML = '✕ 목록 닫기';
+        toggleBtn.innerHTML = '목록 닫기';
     }
 }
 
@@ -92,6 +98,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     if (reportParam) {
         // 특정 보고서가 요청됨
+        renderAllDocuments();
         const decodedReport = normalizeReportFileName(decodeURIComponent(reportParam));
         loadDocument(`reports/${decodedReport}`);
     } else if (companyParam) {
@@ -137,6 +144,8 @@ async function loadCompanies() {
 async function loadDocument(filePath) {
     // URL 업데이트
     const fileName = filePath.replace(/^reports\//, '');
+    currentReportFile = normalizeReportFileName(fileName);
+    updateActiveDocument();
     const newUrl = `?report=${encodeURIComponent(fileName)}`;
     if (window.location.search !== newUrl) {
         window.history.pushState({ report: fileName }, '', newUrl);
@@ -209,10 +218,54 @@ async function loadDocument(filePath) {
         
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `<div class="report-content">${html}</div>`;
+        updateActiveDocument();
     } catch (error) {
         console.error('문서 로드 실패:', error);
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `<p style="color: red;">문서를 불러올 수 없습니다: ${error.message}</p>`;
+    }
+}
+
+function normalizeSearchText(value) {
+    return String(value || '').toLowerCase().replace(/\s+/g, '');
+}
+
+function matchesDocumentSearch(query, company, doc) {
+    const normalizedQuery = normalizeSearchText(query);
+    const terms = [normalizedQuery];
+
+    if (normalizedQuery.includes('spacex') || normalizedQuery.includes('space-x')) {
+        terms.push('스페이스x');
+    }
+
+    const haystack = normalizeSearchText([
+        doc.title,
+        company.name,
+        company.ticker,
+        company.id
+    ].join(' '));
+
+    return terms.some(term => term && haystack.includes(term));
+}
+
+function updateActiveDocument() {
+    document.querySelectorAll('.document-item').forEach(item => {
+        const isActive = item.dataset.file === currentReportFile;
+        item.classList.toggle('is-active', isActive);
+        if (isActive) {
+            item.setAttribute('aria-current', 'page');
+        } else {
+            item.removeAttribute('aria-current');
+        }
+    });
+}
+
+function closeMobileDocumentList() {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        const companiesList = document.getElementById('companiesList');
+        const toggleBtn = document.getElementById('mobileToggleBtn');
+        companiesList.classList.remove('expanded');
+        toggleBtn.innerHTML = '전체 목록';
     }
 }
 
@@ -269,8 +322,8 @@ async function displayLatestReports() {
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `
             <div class="latest-reports-container">
-                <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 3px solid #667eea;">
-                    <h2 style="margin: 0 0 0.5rem 0; color: #333; font-size: 2rem;">📰 최신 게시물 TOP 2</h2>
+                <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 3px solid #2D7DD2;">
+                    <h2 style="margin: 0 0 0.5rem 0; color: #333; font-size: 2rem;">최신 글 2개</h2>
                     <p style="margin: 0; color: #666; font-size: 1.1rem;">가장 최근에 작성된 2개의 분석 보고서</p>
                 </div>
                 <div id="reportsContent" style="margin-top: 2rem;">
@@ -306,21 +359,21 @@ async function displayLatestReports() {
                     <div class="latest-report-card" style="
                         margin-bottom: 2rem;
                         padding: 1.2rem;
-                        background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+                        background: linear-gradient(135deg, #F5F7FA 0%, #fff 100%);
                         border: 1px solid #e0e0e0;
                         border-radius: 8px;
-                        box-shadow: 0 2px 6px rgba(102, 126, 234, 0.08);
+                        box-shadow: 0 2px 6px rgba(45, 125, 210, 0.08);
                         transition: all 0.3s ease;
                     " 
-                    onmouseover="this.style.boxShadow='0 8px 20px rgba(102, 126, 234, 0.2)'; this.style.transform='translateY(-2px)';"
-                    onmouseout="this.style.boxShadow='0 4px 12px rgba(102, 126, 234, 0.1)'; this.style.transform='translateY(0)';">
+                    onmouseover="this.style.boxShadow='0 8px 20px rgba(45, 125, 210, 0.18)'; this.style.transform='translateY(-2px)';"
+                    onmouseout="this.style.boxShadow='0 4px 12px rgba(45, 125, 210, 0.1)'; this.style.transform='translateY(0)';">
                         <div style="
                             display: flex;
                             flex-direction: column;
                             align-items: center;
                             margin-bottom: 1rem;
                             padding-bottom: 1rem;
-                            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+                            border-bottom: 2px solid rgba(45, 125, 210, 0.12);
                         ">
                             <div style="text-align: center; margin-bottom: 1rem;">
                                 <div style="
@@ -337,13 +390,13 @@ async function displayLatestReports() {
                                     ${item.document.title}
                                 </h3>
                                 <p style="margin: 0.5rem 0 0 0; color: #999; font-size: 0.95rem;">
-                                    <strong style="color: #667eea;">${item.company.name}</strong> (${item.company.ticker}) • ${item.document.date}
+                                    <strong style="color: #2D7DD2;">${item.company.name}</strong> (${item.company.ticker}) • ${item.document.date}
                                 </p>
                             </div>
                             <a href="#" onclick="loadDocument('reports/${item.document.file}'); return false;" 
                                style="
                                 padding: 0.7rem 1.5rem;
-                                background: #667eea;
+                                background: #2D7DD2;
                                 color: white;
                                 text-decoration: none;
                                 border-radius: 6px;
@@ -352,7 +405,7 @@ async function displayLatestReports() {
                                 white-space: nowrap;
                                 transition: all 0.2s ease;
                             "
-                            onmouseover="this.style.background='#5568d3'; this.style.transform='scale(1.05)';"
+                            onmouseover="this.style.background='#1A3C5E'; this.style.transform='scale(1.05)';"
                             onmouseout="this.style.background='#2D7DD2'; this.style.transform='scale(1)';">
                                 📄 전체 보기
                             </a>
@@ -413,12 +466,8 @@ function renderCompanyPage(companyId) {
 
     docs.forEach((doc, index) => {
         const docDiv = document.createElement('div');
-        docDiv.style.padding = '0.75rem 1rem';
-        docDiv.style.backgroundColor = '#f9f9f9';
-        docDiv.style.borderRadius = '6px';
-        docDiv.style.marginBottom = '0.5rem';
-        docDiv.style.cursor = 'pointer';
-        docDiv.style.borderLeft = '4px solid #667eea';
+        docDiv.className = 'document-item';
+        docDiv.dataset.file = normalizeReportFileName(doc.file);
         docDiv.innerHTML = `
             <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
                 ${index + 1}. ${doc.title}
@@ -430,6 +479,7 @@ function renderCompanyPage(companyId) {
         docDiv.addEventListener('click', () => selectDocument(company, doc));
         companiesList.appendChild(docDiv);
     });
+    updateActiveDocument();
 
     const docLinks = docs.map(doc => `
         <div style="padding: 1rem 0; border-bottom: 1px solid #eee;">
@@ -487,22 +537,21 @@ function renderAllDocuments() {
     // 정렬된 문서 표시
     allDocs.forEach((item, index) => {
         const docDiv = document.createElement('div');
-        docDiv.style.padding = '0.75rem 1rem';
-        docDiv.style.backgroundColor = '#f9f9f9';
-        docDiv.style.borderRadius = '6px';
-        docDiv.style.marginBottom = '0.5rem';
-        docDiv.style.cursor = 'pointer';
-        docDiv.style.borderLeft = '4px solid #667eea';
-        docDiv.style.transition = 'all 0.3s ease';
+        docDiv.className = 'document-item';
+        docDiv.dataset.file = normalizeReportFileName(item.doc.file);
         
         // 마우스 오버 효과
         docDiv.addEventListener('mouseenter', () => {
-            docDiv.style.backgroundColor = '#f0f0f0';
-            docDiv.style.borderLeftColor = '#764ba2';
+            if (!docDiv.classList.contains('is-active')) {
+                docDiv.style.backgroundColor = '#F5F7FA';
+                docDiv.style.borderLeftColor = '#2D7DD2';
+            }
         });
         docDiv.addEventListener('mouseleave', () => {
-            docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderLeftColor = '#2D7DD2';
+            if (!docDiv.classList.contains('is-active')) {
+                docDiv.style.backgroundColor = '';
+                docDiv.style.borderLeftColor = '';
+            }
         });
         
         docDiv.innerHTML = `
@@ -520,11 +569,12 @@ function renderAllDocuments() {
         
         companiesList.appendChild(docDiv);
     });
+    updateActiveDocument();
 }
 
 // 검색 수행
 function performSearch() {
-    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const query = document.getElementById('searchInput').value.trim();
 
     if (!query) {
         // 검색어 없으면 모든 문서 표시
@@ -532,12 +582,12 @@ function performSearch() {
         return;
     }
 
-    // 제목으로만 검색
+    // 제목, 분류명, 종목코드, id 검색
     const results = [];
     
     companiesData.forEach(company => {
         const matchingDocs = company.documents.filter(doc =>
-            doc.title.toLowerCase().includes(query)
+            matchesDocumentSearch(query, company, doc)
         );
         
         if (matchingDocs.length > 0) {
@@ -559,7 +609,14 @@ function renderSearchResults(results, query) {
     companiesList.classList.remove('initial'); // 검색 결과는 'initial' 클래스 제거
 
     if (results.length === 0) {
-        companiesList.innerHTML = `<p style="color: #999; font-size: 0.9rem;">검색 결과 없음: "${query}"</p>`;
+        companiesList.innerHTML = `
+            <div class="empty-state">
+                <p>검색 결과 없음: "${query}"</p>
+                <button type="button" class="inline-action-button" onclick="document.getElementById('searchInput').value=''; renderAllDocuments(); document.getElementById('companiesList').classList.add('expanded'); document.getElementById('mobileToggleBtn').innerHTML='목록 닫기';">
+                    전체 목록 보기
+                </button>
+            </div>
+        `;
         return;
     }
 
@@ -578,25 +635,29 @@ function renderSearchResults(results, query) {
     // 최신순으로 정렬 (내림차순)
     allSearchDocs.sort((a, b) => b.dateKey - a.dateKey);
 
+    const resultSummary = document.createElement('div');
+    resultSummary.className = 'search-result-summary';
+    resultSummary.textContent = `"${query}" 검색 결과 ${allSearchDocs.length}건`;
+    companiesList.appendChild(resultSummary);
+
     // 정렬된 검색 결과 표시
     allSearchDocs.forEach((item, index) => {
         const docDiv = document.createElement('div');
-        docDiv.style.padding = '0.75rem 1rem';
-        docDiv.style.backgroundColor = '#f9f9f9';
-        docDiv.style.borderRadius = '6px';
-        docDiv.style.marginBottom = '0.5rem';
-        docDiv.style.cursor = 'pointer';
-        docDiv.style.borderLeft = '4px solid #667eea';
-        docDiv.style.transition = 'all 0.3s ease';
+        docDiv.className = 'document-item';
+        docDiv.dataset.file = normalizeReportFileName(item.doc.file);
         
         // 마우스 오버 효과
         docDiv.addEventListener('mouseenter', () => {
-            docDiv.style.backgroundColor = '#f0f0f0';
-            docDiv.style.borderLeftColor = '#2D7DD2';
+            if (!docDiv.classList.contains('is-active')) {
+                docDiv.style.backgroundColor = '#F5F7FA';
+                docDiv.style.borderLeftColor = '#2D7DD2';
+            }
         });
         docDiv.addEventListener('mouseleave', () => {
-            docDiv.style.backgroundColor = '#f9f9f9';
-            docDiv.style.borderLeftColor = '#2D7DD2';
+            if (!docDiv.classList.contains('is-active')) {
+                docDiv.style.backgroundColor = '';
+                docDiv.style.borderLeftColor = '';
+            }
         });
         
         docDiv.innerHTML = `
@@ -614,6 +675,7 @@ function renderSearchResults(results, query) {
         
         companiesList.appendChild(docDiv);
     });
+    updateActiveDocument();
 }
 
 // 프린트 함수
@@ -629,6 +691,7 @@ function selectDocument(company, document) {
     
     // 문서 로드
     loadDocument(`reports/${normalizeReportFileName(document.file)}`);
+    closeMobileDocumentList();
 }
 
 // 현재 페이지 링크 복사 함수
@@ -671,6 +734,7 @@ loadDocument = async function(filePath) {
     // 새 버튼 생성
     const copyButton = document.createElement('div');
     copyButton.id = 'copyLinkButton';
+    copyButton.className = 'copy-link-button';
     copyButton.style.cssText = `
         position: fixed;
         top: 20px;
@@ -695,15 +759,15 @@ loadDocument = async function(filePath) {
     
     // 마우스 오버 효과
     copyButton.addEventListener('mouseenter', () => {
-        copyButton.style.background = '#5568d3';
+        copyButton.style.background = '#1A3C5E';
         copyButton.style.transform = 'scale(1.05)';
-        copyButton.style.boxShadow = '0 6px 16px rgba(102, 126, 234, 0.4)';
+        copyButton.style.boxShadow = '0 6px 16px rgba(45, 125, 210, 0.35)';
     });
     copyButton.addEventListener('mouseleave', () => {
         copyButton.style.background = '#2D7DD2';
         copyButton.style.transform = 'scale(1)';
-        copyButton.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+        copyButton.style.boxShadow = '0 4px 12px rgba(45, 125, 210, 0.3)';
     });
     
-    document.body.appendChild(copyButton);
+    reportContainer.prepend(copyButton);
 };
