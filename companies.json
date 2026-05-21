@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: SEC S-1 공개로 IPO가 공식 절차에 진입",
+          "file": "202605211203.md",
+          "date": "2026-05-21 12:03"
+        },
+        {
           "title": "스페이스X 최근 상황: Starbase 사망 사고와 Starship V3 발사 직전 운영 리스크",
           "file": "202605210602.md",
           "date": "2026-05-21 06:02"
@@ -157,6 +162,12 @@
           "date": "2026-03-19 13:32"
         }
       ]
+    },
+    {
+      "id": "iranwar",
+      "name": "미-이란 전쟁",
+      "ticker": "-",
+      "documents": []
     },
     {
       "id": "trump",
