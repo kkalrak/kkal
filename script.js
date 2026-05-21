@@ -222,7 +222,7 @@ async function loadDocument(filePath) {
     } catch (error) {
         console.error('문서 로드 실패:', error);
         const reportContainer = document.getElementById('reportContainer');
-        reportContainer.innerHTML = `<p style="color: red;">문서를 불러올 수 없습니다: ${error.message}</p>`;
+        reportContainer.innerHTML = `<p class="state-message is-error">문서를 불러올 수 없습니다: ${error.message}</p>`;
     }
 }
 
@@ -295,7 +295,7 @@ async function displayLatestReports() {
         
         if (!companiesData || companiesData.length === 0) {
             console.error('companiesData가 비어있음');
-            document.getElementById('reportContainer').innerHTML = '<p>데이터 로드 실패. 페이지를 새로고침 해주세요.</p>';
+            document.getElementById('reportContainer').innerHTML = '<p class="state-message is-error">데이터 로드 실패. 페이지를 새로고침 해주세요.</p>';
             return;
         }
         
@@ -322,12 +322,12 @@ async function displayLatestReports() {
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `
             <div class="latest-reports-container">
-                <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 3px solid #2D7DD2;">
-                    <h2 style="margin: 0 0 0.5rem 0; color: #333; font-size: 2rem;">최신 글 2개</h2>
-                    <p style="margin: 0; color: #666; font-size: 1.1rem;">가장 최근에 작성된 2개의 분석 보고서</p>
+                <div class="latest-reports-header">
+                    <h2>최신 글 2개</h2>
+                    <p>가장 최근에 작성된 2개의 분석 보고서</p>
                 </div>
-                <div id="reportsContent" style="margin-top: 2rem;">
-                    <p style="color: #999; text-align: center;">보고서 로딩 중...</p>
+                <div id="reportsContent" class="reports-content">
+                    <p class="state-message">보고서 로딩 중...</p>
                 </div>
             </div>
         `;
@@ -352,69 +352,27 @@ async function displayLatestReports() {
                     documentHtml = window.marked.parse(markdown);
                 }
                 
-                const badgeColor = item.company.id === 'koreazinc' ? '#ff6b6b' : '#2D7DD2';
-                const badgeText = item.company.id === 'koreazinc' ? '🚨 주의' : '📊 분석';
+                const badgeClass = item.company.id === 'koreazinc' ? 'report-badge is-alert' : 'report-badge';
+                const badgeText = item.company.id === 'koreazinc' ? '주의' : '분석';
                 
                 htmlContent += `
-                    <div class="latest-report-card" style="
-                        margin-bottom: 2rem;
-                        padding: 1.2rem;
-                        background: linear-gradient(135deg, #F5F7FA 0%, #fff 100%);
-                        border: 1px solid #e0e0e0;
-                        border-radius: 8px;
-                        box-shadow: 0 2px 6px rgba(45, 125, 210, 0.08);
-                        transition: all 0.3s ease;
-                    " 
-                    onmouseover="this.style.boxShadow='0 8px 20px rgba(45, 125, 210, 0.18)'; this.style.transform='translateY(-2px)';"
-                    onmouseout="this.style.boxShadow='0 4px 12px rgba(45, 125, 210, 0.1)'; this.style.transform='translateY(0)';">
-                        <div style="
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            margin-bottom: 1rem;
-                            padding-bottom: 1rem;
-                            border-bottom: 2px solid rgba(45, 125, 210, 0.12);
-                        ">
-                            <div style="text-align: center; margin-bottom: 1rem;">
-                                <div style="
-                                    display: inline-block;
-                                    padding: 0.4rem 0.8rem;
-                                    background: ${badgeColor};
-                                    color: white;
-                                    border-radius: 4px;
-                                    font-size: 0.75rem;
-                                    font-weight: bold;
-                                    margin-bottom: 0.5rem;
-                                ">${badgeText} • ${loadCount}/2</div>
-                                <h3 style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.3rem; line-height: 1.4;">
+                    <div class="latest-report-card">
+                        <div class="latest-report-header">
+                            <div class="latest-report-heading">
+                                <div class="${badgeClass}">${badgeText} • ${loadCount}/2</div>
+                                <h3 class="latest-report-title">
                                     ${item.document.title}
                                 </h3>
-                                <p style="margin: 0.5rem 0 0 0; color: #999; font-size: 0.95rem;">
-                                    <strong style="color: #2D7DD2;">${item.company.name}</strong> (${item.company.ticker}) • ${item.document.date}
+                                <p class="report-meta">
+                                    <strong>${item.company.name}</strong> (${item.company.ticker}) • ${item.document.date}
                                 </p>
                             </div>
                             <a href="#" onclick="loadDocument('reports/${item.document.file}'); return false;" 
-                               style="
-                                padding: 0.7rem 1.5rem;
-                                background: #2D7DD2;
-                                color: white;
-                                text-decoration: none;
-                                border-radius: 6px;
-                                font-size: 0.9rem;
-                                font-weight: bold;
-                                white-space: nowrap;
-                                transition: all 0.2s ease;
-                            "
-                            onmouseover="this.style.background='#1A3C5E'; this.style.transform='scale(1.05)';"
-                            onmouseout="this.style.background='#2D7DD2'; this.style.transform='scale(1)';">
-                                📄 전체 보기
+                               class="report-open-link">
+                                전체 보기
                             </a>
                         </div>
-                        <div class="report-content" style="
-                            font-size: 0.95rem;
-                            line-height: 1.7;
-                            color: #555;
-                        ">
+                        <div class="report-content latest-report-body">
                             ${documentHtml}
                         </div>
                     </div>
@@ -422,14 +380,8 @@ async function displayLatestReports() {
             } catch (error) {
                 console.error(`보고서 로드 실패: ${item.document.file}`, error);
                 htmlContent += `
-                    <div style="
-                        margin-bottom: 3rem;
-                        padding: 2rem;
-                        background: #fff3cd;
-                        border: 2px solid #ffc107;
-                        border-radius: 8px;
-                    ">
-                        <p style="color: #856404;">⚠️ 보고서를 불러올 수 없습니다: ${item.document.title}</p>
+                    <div class="empty-state is-warning">
+                        <p>보고서를 불러올 수 없습니다: ${item.document.title}</p>
                     </div>
                 `;
             }
@@ -439,7 +391,7 @@ async function displayLatestReports() {
     } catch (error) {
         console.error('최신 보고서 로드 실패:', error);
         const reportContainer = document.getElementById('reportContainer');
-        reportContainer.innerHTML = `<p style="color: red;">최신 보고서를 불러올 수 없습니다: ${error.message}</p>`;
+        reportContainer.innerHTML = `<p class="state-message is-error">최신 보고서를 불러올 수 없습니다: ${error.message}</p>`;
     }
 }
 
@@ -449,7 +401,7 @@ function renderCompanyPage(companyId) {
     const reportContainer = document.getElementById('reportContainer');
 
     if (!company) {
-        reportContainer.innerHTML = `<p style="color: red;">분류를 찾을 수 없습니다: ${companyId}</p>`;
+        reportContainer.innerHTML = `<p class="state-message is-error">분류를 찾을 수 없습니다: ${companyId}</p>`;
         return;
     }
 
@@ -469,10 +421,10 @@ function renderCompanyPage(companyId) {
         docDiv.className = 'document-item';
         docDiv.dataset.file = normalizeReportFileName(doc.file);
         docDiv.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
+            <div class="document-title">
                 ${index + 1}. ${doc.title}
             </div>
-            <div style="font-size: 0.85rem; color: #999; text-align: center;">
+            <div class="document-meta">
                 ${company.name} • ${doc.date}
             </div>
         `;
@@ -482,10 +434,10 @@ function renderCompanyPage(companyId) {
     updateActiveDocument();
 
     const docLinks = docs.map(doc => `
-        <div style="padding: 1rem 0; border-bottom: 1px solid #eee;">
-            <h3 style="margin: 0 0 0.4rem 0; color: #333;">${doc.title}</h3>
-            <p style="margin: 0 0 0.8rem 0; color: #777;">${company.name} (${company.ticker}) • ${doc.date}</p>
-            <a href="?report=${encodeURIComponent(doc.file)}" onclick="loadDocument('reports/${doc.file}'); return false;" style="color: #2D7DD2; font-weight: 600;">보고서 보기</a>
+        <div class="company-doc-link">
+            <h3>${doc.title}</h3>
+            <p>${company.name} (${company.ticker}) • ${doc.date}</p>
+            <a href="?report=${encodeURIComponent(doc.file)}" onclick="loadDocument('reports/${doc.file}'); return false;" class="text-link">보고서 보기</a>
         </div>
     `).join('');
 
@@ -540,25 +492,11 @@ function renderAllDocuments() {
         docDiv.className = 'document-item';
         docDiv.dataset.file = normalizeReportFileName(item.doc.file);
         
-        // 마우스 오버 효과
-        docDiv.addEventListener('mouseenter', () => {
-            if (!docDiv.classList.contains('is-active')) {
-                docDiv.style.backgroundColor = '#F5F7FA';
-                docDiv.style.borderLeftColor = '#2D7DD2';
-            }
-        });
-        docDiv.addEventListener('mouseleave', () => {
-            if (!docDiv.classList.contains('is-active')) {
-                docDiv.style.backgroundColor = '';
-                docDiv.style.borderLeftColor = '';
-            }
-        });
-        
         docDiv.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
+            <div class="document-title">
                 ${index + 1}. ${item.doc.title}
             </div>
-            <div style="font-size: 0.85rem; color: #999; text-align: center;">
+            <div class="document-meta">
                 ${item.company.name} • ${item.doc.date}
             </div>
         `;
@@ -646,25 +584,11 @@ function renderSearchResults(results, query) {
         docDiv.className = 'document-item';
         docDiv.dataset.file = normalizeReportFileName(item.doc.file);
         
-        // 마우스 오버 효과
-        docDiv.addEventListener('mouseenter', () => {
-            if (!docDiv.classList.contains('is-active')) {
-                docDiv.style.backgroundColor = '#F5F7FA';
-                docDiv.style.borderLeftColor = '#2D7DD2';
-            }
-        });
-        docDiv.addEventListener('mouseleave', () => {
-            if (!docDiv.classList.contains('is-active')) {
-                docDiv.style.backgroundColor = '';
-                docDiv.style.borderLeftColor = '';
-            }
-        });
-        
         docDiv.innerHTML = `
-            <div style="font-weight: 600; margin-bottom: 0.2rem; color: #333; text-align: center;">
+            <div class="document-title">
                 ${index + 1}. ${item.doc.title}
             </div>
-            <div style="font-size: 0.85rem; color: #999; text-align: center;">
+            <div class="document-meta">
                 ${item.company.name} • ${item.doc.date}
             </div>
         `;
@@ -703,13 +627,13 @@ function copyCurrentLink(e) {
     navigator.clipboard.writeText(url).then(() => {
         // 복사 성공 - 버튼 피드백
         const originalText = button.innerHTML;
-        button.innerHTML = '✅ 링크 복사됨!';
-        button.style.background = '#4CAF50';
+        button.innerHTML = '링크 복사됨';
+        button.classList.add('is-copied');
         
         // 2초 후 원래 상태로 복구
         setTimeout(() => {
             button.innerHTML = originalText;
-            button.style.background = '#2D7DD2';
+            button.classList.remove('is-copied');
         }, 2000);
     }).catch(err => {
         alert('링크 복사 실패: ' + err);
@@ -735,39 +659,8 @@ loadDocument = async function(filePath) {
     const copyButton = document.createElement('div');
     copyButton.id = 'copyLinkButton';
     copyButton.className = 'copy-link-button';
-    copyButton.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        background: #2D7DD2;
-        color: white;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: bold;
-        box-shadow: 0 4px 12px rgba(45, 125, 210, 0.3);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    `;
-    copyButton.innerHTML = '🔗 링크 복사';
+    copyButton.innerHTML = '링크 복사';
     copyButton.addEventListener('click', copyCurrentLink);
-    
-    // 마우스 오버 효과
-    copyButton.addEventListener('mouseenter', () => {
-        copyButton.style.background = '#1A3C5E';
-        copyButton.style.transform = 'scale(1.05)';
-        copyButton.style.boxShadow = '0 6px 16px rgba(45, 125, 210, 0.35)';
-    });
-    copyButton.addEventListener('mouseleave', () => {
-        copyButton.style.background = '#2D7DD2';
-        copyButton.style.transform = 'scale(1)';
-        copyButton.style.boxShadow = '0 4px 12px rgba(45, 125, 210, 0.3)';
-    });
     
     reportContainer.prepend(copyButton);
 };
