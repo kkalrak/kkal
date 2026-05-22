@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: Starship V3 첫 발사 scrub, 타워 암 결함이 변수로 남다",
+          "file": "202605221200.md",
+          "date": "2026-05-22 12:00"
+        },
+        {
           "title": "스페이스X 최근 상황: Anthropic 계약으로 AI 컴퓨트 외부 판매가 현실화",
           "file": "202605220305.md",
           "date": "2026-05-22 03:05"
