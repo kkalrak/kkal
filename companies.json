@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: Starship V3 첫 비행 성공, 그러나 재사용 검증은 아직 미완",
+          "file": "202605230903.md",
+          "date": "2026-05-23 09:03"
+        },
+        {
           "title": "스페이스X 최근 상황: Starship V3 scrub 뒤에 Mars flyby 공개와 Falcon 9 일정 유지",
           "file": "202605230003.md",
           "date": "2026-05-23 00:03"
