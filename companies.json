@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: 5월 26일 Vandenberg Starlink 발사창과 6월 초까지 이어지는 Falcon 9 일정",
+          "file": "202605260001.md",
+          "date": "2026-05-26 00:01"
+        },
+        {
           "title": "스페이스X 최근 상황: Starlink 10-47이 5월 25일 발사창에 들어가고 Falcon 9 리듬이 이어진다",
           "file": "202605251202.md",
           "date": "2026-05-25 12:02"
