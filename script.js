@@ -180,11 +180,11 @@ async function loadDocument(filePath) {
             }
         }
         
-        // 설명 찾기 (Executive Summary 섹션의 첫 문장들)
+        // 설명 찾기 (핵심 사실 섹션의 첫 문장들)
         let foundSummary = false;
         let summaryText = '';
         for (let i = 0; i < lines.length; i++) {
-            if (lines[i].includes('Executive Summary') || lines[i].includes('요약') || lines[i].includes('Summary')) {
+            if (lines[i].includes('핵심 사실') || lines[i].includes('Executive Summary') || lines[i].includes('요약') || lines[i].includes('Summary')) {
                 foundSummary = true;
                 continue;
             }
