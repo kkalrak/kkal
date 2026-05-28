@@ -314,17 +314,17 @@ async function displayLatestReports() {
         
         // 최신순으로 정렬
         allDocuments.sort((a, b) => b.dateKey - a.dateKey);
-        const latestReports = allDocuments.slice(0, 2);
+        const latestReports = allDocuments.slice(0, 6);
         
-        console.log('최신 2개 보고서:', latestReports);
+        console.log('최신 6개 보고서:', latestReports);
         
         // 헤더 표시
         const reportContainer = document.getElementById('reportContainer');
         reportContainer.innerHTML = `
             <div class="latest-reports-container">
                 <div class="latest-reports-header">
-                    <h2>최신 글 2개</h2>
-                    <p>가장 최근에 작성된 2개의 분석 보고서</p>
+                    <h2>최신 글 6개</h2>
+                    <p>가장 최근에 작성된 6개의 분석 보고서</p>
                 </div>
                 <div id="reportsContent" class="reports-content">
                     <p class="state-message">보고서 로딩 중...</p>
@@ -359,7 +359,7 @@ async function displayLatestReports() {
                     <div class="latest-report-card">
                         <div class="latest-report-header">
                             <div class="latest-report-heading">
-                                <div class="${badgeClass}">${badgeText} • ${loadCount}/2</div>
+                                <div class="${badgeClass}">${badgeText} • ${loadCount}/6</div>
                                 <h3 class="latest-report-title">
                                     ${item.document.title}
                                 </h3>
