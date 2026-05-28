@@ -112,6 +112,11 @@
       "ticker": "SPACEX (예정)",
       "documents": [
         {
+          "title": "스페이스X 최근 상황: FAA가 Starship Flight 12 조사 착수를 명령",
+          "file": "202605281802.md",
+          "date": "2026-05-28 18:02"
+        },
+        {
           "title": "스페이스X 최근 상황: Globalstar HIBLEO-4 일정 재조정과 Falcon 9 상업 발사",
           "file": "202605280603.md",
           "date": "2026-05-28 06:03"
