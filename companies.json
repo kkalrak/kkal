@@ -78,6 +78,18 @@
   ],
   "specials": [
     {
+      "id": "us-iran-war",
+      "name": "미-이란 전쟁",
+      "ticker": "-",
+      "documents": [
+        {
+          "title": "미-이란 전쟁 최근 상황: 쿠웨이트 공항 드론 타격과 1명 사망",
+          "file": "202606040000.md",
+          "date": "2026-06-04 00:00"
+        }
+      ]
+    },
+    {
       "id": "viome",
       "name": "Viome (마이크로바이옴 AI)",
       "ticker": "PRIVATE",
