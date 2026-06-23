@@ -79,7 +79,13 @@
       "id": "spacex",
       "name": "SpaceX",
       "ticker": "-",
-      "documents": []
+      "documents": [
+        {
+          "title": "스페이스X 최근 상황: Starfall Demo 미션을 발사하고 재진입 캡슐 시험을 시작했다",
+          "file": "202606240802.md",
+          "date": "2026-06-24 08:01"
+        }
+      ]
     }
   ],
   "specials": [
