@@ -79,7 +79,12 @@
       "id": "spacex",
       "name": "SpaceX",
       "ticker": "-",
-      "documents": [
+    "documents": [
+        {
+          "title": "스페이스X 최근 상황: 250억 달러 첫 회사채 가격을 확정하고 6월 26일 정산을 예고했다",
+          "file": "202606251200.md",
+          "date": "2026-06-25 12:00"
+        },
         {
           "title": "스페이스X 최근 상황: Starfall Demo 미션을 발사하고 재진입 캡슐 시험을 시작했다",
           "file": "202606240802.md",
